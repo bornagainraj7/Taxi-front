@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+.card {
+  box-shadow: 1px 2px 4px #3f3f3f;
+  padding: 4rem 3rem;
+}
+.space {
+  width: 100%;
+  display: block;
+  height: 30px;
+}
+.two-space {
+  width: 100%;
+  display: block;
+  height: 60px;
+}
+.three-space {
+  width: 100%;
+  display: block;
+  height: 90px;
+}
+
+.row {
+margin-right: 0px !important;
+margin-left: 0px !important;
+}
