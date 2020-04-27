@@ -9,12 +9,14 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { CabsComponent } from './cabs/cabs.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    CabsComponent
   ],
   imports: [
     BrowserModule,

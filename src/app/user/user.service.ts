@@ -33,7 +33,7 @@ export class UserService {
       }
       console.log(response);
     }, (error) => {
-      console.log(error);
+      console.log(error.error);;
     });
   }
 
@@ -56,7 +56,7 @@ export class UserService {
       }
     }, error => {
       this.authStatusList.next(false);
-      console.log(error);
+      console.log(error.error);;
     });
   }
 
