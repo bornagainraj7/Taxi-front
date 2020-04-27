@@ -5,14 +5,15 @@ import { BookingsComponent } from '../booking/bookings/bookings.component';
 import { SignupComponent } from '../user/signup/signup.component';
 import { LoginComponent } from '../user/login/login.component';
 import { CabsComponent } from '../cabs/cabs.component';
+import { RouteGuard } from '../route.guard';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'bookings', component: BookingsComponent },
-  { path: 'my-cab', component: CabsComponent },
+  { path: 'bookings', component: BookingsComponent, canActivate: [RouteGuard] },
+  { path: 'my-cab', component: CabsComponent, canActivate: [RouteGuard] },
 ];
 
 @NgModule({
@@ -23,7 +24,7 @@ const routes: Routes = [
   exports: [
     RouterModule
   ],
-  providers: [],
+  providers: [RouteGuard],
   declarations: []
 })
 export class AppRoutingModule { }

@@ -9,7 +9,6 @@ export class CabService {
 
   baseUrl = 'http://localhost:3000/api/cab';
 
-  allCabs = [];
 
   constructor(private http: HttpClient) { }
 
@@ -18,13 +17,6 @@ export class CabService {
   }
 
   getAllCabs() {
-    this.http.get<ResponseData>(`${this.baseUrl}/get`)
-    .subscribe(response => {
-      if (!response.error) {
-        this.allCabs.push(response.data);
-      }
-    }, error => {
-      console.log(error.error);
-    });
+    return this.http.get<ResponseData>(`${this.baseUrl}/get`);
   }
 }

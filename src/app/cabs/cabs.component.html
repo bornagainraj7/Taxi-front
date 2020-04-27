@@ -56,3 +56,12 @@
     </div>
   </div>
 </div>
+<div class="three-space"></div>
+<div class="row justify-content-center" *ngIf="cabList.length > 0">
+  <div class="col-md-12 col-xs-12">
+    <div class="card" *ngFor="let cab of cabList">
+      <h3>{{ cab.carBrand }} {{ cab.carModel }}</h3>
+      <h4>{{ cab.vehicleNumber }} {{ cab.cabType }}</h4>
+    </div>
+  </div>
+</div>

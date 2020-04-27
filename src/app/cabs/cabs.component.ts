@@ -16,11 +16,12 @@ export class CabsComponent implements OnInit {
   ];
 
 
-  cablist = [];
+  cabList = [];
 
   constructor(private cabService: CabService) { }
 
   ngOnInit() {
+    this.getAllCabs();
   }
 
   onAddCab(form: NgForm) {
@@ -46,7 +47,18 @@ export class CabsComponent implements OnInit {
     .subscribe(response => {
       if (!response.error) {
         const newCab = response.data;
-        this.cablist.push(newCab);
+        this.cabList.push(newCab);
+      }
+    }, error => {
+      console.log(error.error);
+    });
+  }
+
+  getAllCabs() {
+    this.cabService.getAllCabs()
+    .subscribe(response => {
+      if (!response.error) {
+        this.cabList.push(response.data);
       }
     }, error => {
       console.log(error.error);
