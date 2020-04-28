@@ -10,9 +10,6 @@ import { NgForm } from '@angular/forms';
 })
 export class SignupComponent implements OnInit {
 
-  public email;
-  public password;
-  public fullName;
   public isDriver;
 
 
@@ -26,12 +23,18 @@ export class SignupComponent implements OnInit {
     if (form.invalid) {
       return;
     }
+
+    if (form.value.isDriver) {
+      this.isDriver = form.value.isDriver;
+    } else {
+      this.isDriver = false;
+    }
     this.userService.createUser(
       { fullName: form.value.fullName,
         email: form.value.email,
         password: form.value.password,
-        isDriver: form.value.isDriver });
-    // form.resetForm();
+        isDriver: this.isDriver });
+    form.resetForm();
   }
 
 }

@@ -58,7 +58,19 @@ export class CabsComponent implements OnInit {
     this.cabService.getAllCabs()
     .subscribe(response => {
       if (!response.error) {
-        this.cabList.push(response.data);
+
+        this.cabList = response.data.map(cab => {
+          return {
+            _id: cab._id,
+            cabType: cab.cabType === 1 ? 'Normal' : 'Pink',
+            available: cab.available ? 'Available' : 'Unavailable',
+            carBrand: cab.carBrand,
+            carModel: cab.carModel,
+            currentLocation: cab.currentLocation,
+            driverId: cab.driverId,
+            vehicleNumber: cab.vehicleNumber
+          };
+        });
       }
     }, error => {
       console.log(error.error);

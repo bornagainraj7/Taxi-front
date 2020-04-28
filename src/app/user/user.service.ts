@@ -72,7 +72,6 @@ export class UserService {
 
     const userData = { token, expirationDate: new Date(expirationDate), userId, email, name };
     this.userData = userData;
-    console.log(userData);
     if (token || !expirationDate) {
       return;
     }
@@ -83,7 +82,6 @@ export class UserService {
   autoAuthUser() {
     this.getAuthData();
     const authInfo = this.userData;
-    console.log(authInfo);
     if (!authInfo) {
       return;
     }
@@ -115,10 +113,8 @@ export class UserService {
   }
 
   login(userData) {
-    console.log(userData);
     this.http.post<ResponseData>(`${this.baseUrl}/login`, userData)
     .subscribe(response => {
-      console.log(response);
       this.token = response.data.token;
       if (!response.error) {
         const expiresIn = 86400;

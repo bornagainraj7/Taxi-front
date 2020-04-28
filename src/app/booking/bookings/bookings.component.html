@@ -1,3 +1,66 @@
-<p>
-  bookings works!
-</p>
+<div class="row justify-content-center">
+  <div class="two-space"></div>
+  <div class="col-sm-12 col-xs-12">
+    <div class="card">
+      <h2 class="card-title text-center">Book A Cab</h2>
+      <div class="space"></div>
+
+      <form (submit)="onBooking(bookingForm)" #bookingForm="ngForm">
+        <div class="row justify-content-between">
+          <div class="col-md-4 col-xs-6">
+            <span>Start Location: </span>
+            <div class="form-group">
+              <input type="text" name="startLat" ngModel class="form-control" placeholder="Start Lat" required>
+            </div>
+            <div class="form-group">
+              <input type="text" name="startLng" ngModel class="form-control" placeholder="Start Lng" required>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xs-6">
+            <span>Destination Location: </span>
+            <div class="form-group">
+              <input type="text" name="destLat" ngModel class="form-control" placeholder="Destination Lat" required>
+            </div>
+            <div class="form-group">
+              <input type="text" name="destLng" ngModel class="form-control" placeholder="Destination Lng" required>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xs-6">
+            <span>Cab Type: </span>
+            <div class="form-group">
+              <select class="form-control" name="cabType" ngModel id="cabType" required>
+                <option value=""></option>
+                <option *ngFor="let cab of cabTypes" [value]="cab.type">{{ cab.value }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row d-flex justify-content-end">
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-success wide" [disabled]="bookingForm.invalid">Book</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+<div class="three-space"></div>
+<h2 class="text-center">My Bookings</h2>
+<div class="two-space"></div>
+<div class="row justify-content-center" *ngIf="allBookings.length > 0">
+  <div class="col-md-12 col-xs-12" *ngFor="let booking of allBookings">
+    <div class="card">
+      <h3>{{ booking.carBrand }} {{ booking.carModel }}</h3> for <h3>${{ booking.price }}</h3>
+      <h5>{{ booking.vehicleNumber }} "{{ booking.cabType }}"</h5>
+      <span>on {{ booking.createdOn | date }}</span>
+      <span>From: {{ booking.location.start.latlng.coordinates[0] }}, {{ booking.location.start.latlng.coordinates[1] }}</span>
+      <span>To: {{ booking.location.end.latlng.coordinates[0] }}, {{ booking.location.start.latlng.coordinates[1] }}</span>
+    </div>
+    <div class="space"></div>
+  </div>
+</div>
+<div class="three-space"></div>
