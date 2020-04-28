@@ -81,7 +81,7 @@ export class CabsComponent implements OnInit {
       this.userService.toastError(error.error.message);
       console.log(error.error);
     });
-  };
+  }
 
   keyPress(event) {
     let k;
