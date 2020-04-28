@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BookingService } from '../booking.service';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-bookings',
@@ -16,7 +17,7 @@ export class BookingsComponent implements OnInit {
 
   allBookings = [];
 
-  constructor(private bookingService: BookingService) { }
+  constructor(private bookingService: BookingService, private userService: UserService) { }
 
   ngOnInit() {
     this.myBookings();
@@ -36,14 +37,15 @@ export class BookingsComponent implements OnInit {
       // tslint:disable-next-line: radix
       cabType: parseInt(form.value.cabType),
     };
-    // console.log(form.value);
 
     this.bookingService.addNewBooking(data)
     .subscribe(response => {
       if (!response.error) {
+        this.userService.toastSuccess(response.message);
         this.allBookings.push(response.data);
       }
     }, error => {
+      this.userService.toastSuccess(error.error.message);
       console.log(error);
     });
   }
@@ -53,6 +55,8 @@ export class BookingsComponent implements OnInit {
     this.bookingService.getAllBookings()
     .subscribe(response => {
       if (!response.error) {
+        this.userService.toastSuccess(response.message);
+
         this.allBookings  = response.data.map(data => {
           return {
             _id: data._id,
@@ -73,8 +77,15 @@ export class BookingsComponent implements OnInit {
         });
       }
     }, error => {
+      this.userService.toastSuccess(error.error.message);
       console.log(error.error);
     });
+  }
+
+  keyPress(event) {
+    let k;
+    k = event.charCode;
+    return ((k >= 48 && k <= 57) || k === 46);
   }
 
 }

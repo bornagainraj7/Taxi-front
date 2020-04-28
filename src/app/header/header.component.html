@@ -9,7 +9,7 @@
       <li class="nav-item" *ngIf="isAuthenticated">
         <a class="nav-link" routerLink="/bookings" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">My Bookings</a>
       </li>
-      <li class="nav-item" *ngIf="isAuthenticated">
+      <li class="nav-item" *ngIf="isAuthenticated && isDriver">
         <a class="nav-link" routerLink="/my-cab" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">My Cabs</a>
       </li>
       <li class="nav-item" *ngIf="!isAuthenticated">

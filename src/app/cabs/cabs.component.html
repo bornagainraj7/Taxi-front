@@ -39,7 +39,7 @@
         <div class=" form-class d-flex justify-content-between">
           <div class="form-group">
             <label for="vehicleNumber">Current Location(lat): </label>
-            <input type="text" name="lat" ngModel class="form-control" id="vehicleNumber" placeholder="Current Location(Lat)" required>
+            <input type="text" name="lat" ngModel class="form-control" id="vehicleNumber" placeholder="Current Location(Lat)" (keypress)="keyPress($event)" required>
           </div>
           <div class="form-group">
             <label for="vehicleNumber">Current Location(long): </label>

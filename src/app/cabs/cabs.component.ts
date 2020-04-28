@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CabService } from '../cab.service';
 import { from } from 'rxjs';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-cabs',
@@ -18,7 +19,7 @@ export class CabsComponent implements OnInit {
 
   cabList = [];
 
-  constructor(private cabService: CabService) { }
+  constructor(private cabService: CabService, private userService: UserService) { }
 
   ngOnInit() {
     this.getAllCabs();
@@ -48,8 +49,11 @@ export class CabsComponent implements OnInit {
       if (!response.error) {
         const newCab = response.data;
         this.cabList.push(newCab);
+
+        this.userService.toastSuccess(response.message);
       }
     }, error => {
+      this.userService.toastError(error.error.message);
       console.log(error.error);
     });
   }
@@ -58,6 +62,7 @@ export class CabsComponent implements OnInit {
     this.cabService.getAllCabs()
     .subscribe(response => {
       if (!response.error) {
+        this.userService.toastSuccess(response.message);
 
         this.cabList = response.data.map(cab => {
           return {
@@ -73,7 +78,15 @@ export class CabsComponent implements OnInit {
         });
       }
     }, error => {
+      this.userService.toastError(error.error.message);
       console.log(error.error);
     });
+  };
+
+  keyPress(event) {
+    let k;
+    k = event.charCode;
+    return ((k >= 48 && k <= 57) || k === 46);
   }
+
 }

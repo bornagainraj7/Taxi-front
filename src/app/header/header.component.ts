@@ -12,14 +12,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isCollapsed = true;
   private authListSubs: Subscription;
   public isAuthenticated = false;
+  public isDriver = false;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.isAuthenticated = this.userService.getIsAuth();
+    this.isDriver = this.userService.getIsDriver();
     this.authListSubs = this.userService.getAuthStatusListener()
     .subscribe(isAuth => {
         this.isAuthenticated = isAuth;
+        this.isDriver = this.userService.getIsDriver();
     });
   }
 

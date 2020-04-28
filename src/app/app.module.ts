@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -11,6 +12,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CabsComponent } from './cabs/cabs.component';
 import { AuthInterceptor } from './user/auth.interceptor';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -21,12 +23,14 @@ import { AuthInterceptor } from './user/auth.interceptor';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     UserModule,
     BookingModule,
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

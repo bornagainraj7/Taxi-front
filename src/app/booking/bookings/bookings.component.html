@@ -10,20 +10,20 @@
           <div class="col-md-4 col-xs-6">
             <span>Start Location: </span>
             <div class="form-group">
-              <input type="text" name="startLat" ngModel class="form-control" placeholder="Start Lat" required>
+              <input type="text" name="startLat" ngModel class="form-control" placeholder="Start Lat" (keypress)="keyPress($event)" required>
             </div>
             <div class="form-group">
-              <input type="text" name="startLng" ngModel class="form-control" placeholder="Start Lng" required>
+              <input type="text" name="startLng" ngModel class="form-control" placeholder="Start Lng" (keypress)="keyPress($event)" required>
             </div>
           </div>
 
           <div class="col-md-4 col-xs-6">
             <span>Destination Location: </span>
             <div class="form-group">
-              <input type="text" name="destLat" ngModel class="form-control" placeholder="Destination Lat" required>
+              <input type="text" name="destLat" ngModel class="form-control" placeholder="Destination Lat" (keypress)="keyPress($event)" required>
             </div>
             <div class="form-group">
-              <input type="text" name="destLng" ngModel class="form-control" placeholder="Destination Lng" required>
+              <input type="text" name="destLng" ngModel class="form-control" placeholder="Destination Lng" (keypress)="keyPress($event)" required>
             </div>
           </div>
 

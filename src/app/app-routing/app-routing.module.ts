@@ -6,6 +6,7 @@ import { SignupComponent } from '../user/signup/signup.component';
 import { LoginComponent } from '../user/login/login.component';
 import { CabsComponent } from '../cabs/cabs.component';
 import { RouteGuard } from '../route.guard';
+import { DriverGuard } from '../driver.guard';
 
 
 const routes: Routes = [
@@ -13,7 +14,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'bookings', component: BookingsComponent, canActivate: [RouteGuard] },
-  { path: 'my-cab', component: CabsComponent, canActivate: [RouteGuard] },
+  { path: 'my-cab', component: CabsComponent, canActivate: [RouteGuard, DriverGuard] },
 ];
 
 @NgModule({
@@ -24,7 +25,7 @@ const routes: Routes = [
   exports: [
     RouterModule
   ],
-  providers: [RouteGuard],
+  providers: [RouteGuard, DriverGuard],
   declarations: []
 })
 export class AppRoutingModule { }

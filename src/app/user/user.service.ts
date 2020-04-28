@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ResponseData } from './responseData.model';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,10 @@ export class UserService {
   private userId: string;
   private email: string;
   private name: string;
+  private isDriver: boolean;
 
-  constructor(private http: HttpClient, private router: Router) { }
+
+  constructor(private http: HttpClient, private router: Router, private toast: ToastrService) { }
 
   getToken() {
     return this.token;
@@ -38,12 +41,26 @@ export class UserService {
     return this.isAuthenticated;
   }
 
+  getIsDriver() {
+    return this.isDriver;
+  }
+
+  toastSuccess(message) {
+    console.log('toast success');
+    this.toast.success(message, 'Success');
+  }
+
+  toastError(message) {
+    this.toast.error(message, 'Error');
+  }
+
 
   private saveAuthData(expiration: Date) {
     localStorage.setItem('token', this.token);
     localStorage.setItem('name', this.name);
     localStorage.setItem('userId', this.userId);
     localStorage.setItem('email', this.email);
+    localStorage.setItem('driver', this.isDriver.toString());
     localStorage.setItem('expiration', expiration.toISOString());
   }
 
@@ -54,6 +71,7 @@ export class UserService {
     localStorage.removeItem('email');
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
+    localStorage.removeItem('driver');
   }
 
   private setAuthTimer(duration) {
@@ -69,6 +87,14 @@ export class UserService {
     const userId = localStorage.getItem('userId');
     const email = localStorage.getItem('email');
     const name = localStorage.getItem('name');
+    const driver = localStorage.getItem('driver');
+    let isDriver: boolean;
+
+    if (driver == 'true') {
+      isDriver = true;
+    } else {
+      isDriver = false;
+    }
 
     const userData = { token, expirationDate: new Date(expirationDate), userId, email, name };
     this.userData = userData;
@@ -104,10 +130,12 @@ export class UserService {
     this.http.post<ResponseData>(`${this.baseUrl}/signup`, userData)
     .subscribe((response) => {
       if (!response.error) {
+        this.toastSuccess(response.message);
         this.router.navigate(['/login']);
       }
       console.log(response);
     }, (error) => {
+      this.toastError(error.error.message);
       console.log(error.error);
     });
   }
@@ -126,14 +154,18 @@ export class UserService {
         this.userId = response.data._id;
         this.email = response.data.email;
         this.name = response.data.fullName;
+        this.isDriver = response.data.isDriver;
 
         const expirationDate = new Date(Date.now() + expiresIn * 1000);
         this.saveAuthData(expirationDate);
 
+        console.log('...toast');
+        this.toastSuccess(response.message);
         this.router.navigate(['bookings']);
       }
     }, error => {
       this.authStatusList.next(false);
+      this.toastError(error.error.message);
       console.log(error.error);
     });
   }
@@ -146,8 +178,10 @@ export class UserService {
     this.userId = null;
     this.email = null;
     this.name = null;
+    this.isDriver = null;
     this.clearAuthData();
     clearTimeout(this.tokenTimer);
+    this.toastSuccess('User Successfully logged out');
     this.router.navigate(['/login']);
   }
 
